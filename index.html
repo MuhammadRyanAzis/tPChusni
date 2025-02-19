@@ -1,44 +1,142 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prestasi Moklet</title>
+    <title>Video Slider</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 transition-colors duration-300" id="body">
-    <div class="bg-blue-500 text-white text-center py-4 text-xl font-bold">Prestasi Moklet</div>
-    
-    <div class="flex flex-col md:flex-row p-5 gap-5">
-        <div class="flex-1 bg-black flex justify-center items-center p-5 rounded-lg">
-            <iframe class="w-full md:w-3/4 h-full md:h-80 rounded-lg" src="https://www.youtube.com/embed/EdrU_4K9e6M?si=ROysY8M5jzD5iQXI" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="flex-1 space-y-4">
-            <div class="bg-white p-4 rounded-lg shadow text-center">Prestasi 1</div>
-            <div class="bg-white p-4 rounded-lg shadow text-center">Prestasi 2</div>
-            <div class="bg-white p-4 rounded-lg shadow text-center">Prestasi 3</div>
-            <div class="bg-white p-4 rounded-lg shadow text-center">Prestasi 4</div>
-            <div class="bg-white p-4 rounded-lg shadow text-center">Prestasi 5</div>
-        </div>
-    </div>
-    
-    <div class="fixed bottom-0 w-full bg-blue-500 text-white py-2 overflow-hidden whitespace-nowrap">
-        <marquee behavior="scroll" direction="right" class="text-lg">🔥 Selamat Datang di Website Prestasi Moklet! Lihat berbagai prestasi terbaru dari siswa terbaik kami! 🔥</marquee>
-    </div>
-    
-    <button onclick="toggleDarkMode()" class="fixed top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow">MODE</button>
-    
-    <script>
-        function toggleDarkMode() {
-            const body = document.getElementById('body');
-            if (body.classList.contains('bg-gray-100')) {
-                body.classList.remove('bg-gray-100', 'text-white');
-                body.classList.add('bg-gray-900', 'text-black');
-            } else {
-                body.classList.remove('bg-gray-900', 'text-white');
-                body.classList.add('bg-gray-100', 'text-black');
-            }
+    <style>
+        .video-button {
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }.marquee-container {
+
+        width: 100%;
+        overflow: hidden;
+        background: #6f6f6f;
+        padding: 10px 0;
+        position: relative;
         }
-    </script>
+            button{
+            box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .marquee {
+
+        white-space: nowrap;
+
+        display: inline-block;
+
+        animation: marquee 10s linear infinite;
+
+        }
+        
+        @keyframes marquee {
+
+        from { transform: translateX((100%)-100%); }
+
+        to { transform: translateX(100%); }
+
+        }
+            </style>
+            <script>
+                let index = 0;
+
+                function goToSlide(slideIndex) {
+                    index = slideIndex;
+                    showSlide();
+                }
+
+                function showSlide() {
+                    const slides = document.querySelectorAll("#slider iframe");
+                    document.getElementById("slider").style.transform = `translateX(-${index * 100}%)`;
+                    updateActiveButton();
+                }
+
+                function nextSlide() {
+                    index = (index + 1) % slides.length;
+                    showSlide();
+                }
+
+                function prevSlide() {
+                    index = (index - 1 + slides.length) % slides.length;
+                    showSlide();
+                }
+
+                function updateActiveButton() {
+                    const buttons = document.querySelectorAll('.video-button');
+                    buttons.forEach((btn, i) => {
+                        btn.classList.toggle('animate-pulse', i === index);
+                    });
+                }
+
+                document.addEventListener('DOMContentLoaded', showSlide);
+            </script>
+</head>
+<body class="bg-gray-100 color-white-100">
+
+    <header class="bg-gray-500 shadow-md py-4 px-6 flex justify-between items-center flex-wrap lg:mb-5 md:mb-3 mb-2">
+        <div class="text-xl font-bold">Logo</div>
+        <div class="text-lg font-medium">Muhammad Ryan Azis</div>
+    
+        <!-- Tombol Menu untuk Mobile -->
+        <button id="menu-btn" class="block md:hidden text-gray-700 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    
+        <!-- Navigasi -->
+        <nav id="menu" class="hidden md:flex space-x-6 w-full md:w-auto mt-2 md:mt-0">
+            <ul class="flex flex-col md:flex-row md:space-x-6 w-full">
+                <li><a href="#about" class="text-gray-700 hover:text-gray-900 block py-2">About Me</a></li>
+                <li><a href="#contact" class="text-gray-700 hover:text-gray-900 block py-2">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <div class="text-xl font-bold">Logo</div>
+        <div class="text-lg font-medium">Abdulloh Hisyam Alfaiyadh</div>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="#about" class="text-gray-700 hover:text-gray-900">About Me</a></li>
+                <li><a href="#contact" class="text-gray-700 hover:text-gray-900">Contact</a></li>
+            </ul>
+        </nav>
+    </header> -->
+    <div class="flex justify-scratch items-start h-auto gap-4 ">
+        <!-- <div class="flex flex-col items-center space-y-4 mb-4 w-full max-w-[20%] justify-around">
+            <button onclick="goToSlide(0)" class="video-button">Video 1</button>
+            <button onclick="goToSlide(1)" class="video-button">Video 2</button>
+            <button onclick="goToSlide(2)" class="video-button">Video 3</button>
+            <button onclick="goToSlide(3)" class="video-button">Video 4</button>
+            <button onclick="goToSlide(4)" class="video-button">Video 5</button>
+        </div> -->
+        <div class="flex flex-col items-center space-y-4 mb-4 w-full max-w-[20%] h-auto justify-around">
+            <button onclick="goToSlide(0)" class="video-button w-full px-4 py-2 text-sm md:text-base lg:text-lg bg-blue-500 text-white rounded-lg transition-all hover:bg-blue-600">Video 1</button>
+            <button onclick="goToSlide(1)" class="video-button w-full px-4 py-2 text-sm md:text-base lg:text-lg bg-blue-500 text-white rounded-lg transition-all hover:bg-blue-600">Video 2</button>
+            <button onclick="goToSlide(2)" class="video-button w-full px-4 py-2 text-sm md:text-base lg:text-lg bg-blue-500 text-white rounded-lg transition-all hover:bg-blue-600">Video 3</button>
+            <button onclick="goToSlide(3)" class="video-button w-full px-4 py-2 text-sm md:text-base lg:text-lg bg-blue-500 text-white rounded-lg transition-all hover:bg-blue-600">Video 4</button>
+            <button onclick="goToSlide(4)" class="video-button w-full px-4 py-2 text-sm md:text-base lg:text-lg bg-blue-500 text-white rounded-lg transition-all hover:bg-blue-600">Video 5</button>
+        </div>
+        
+        <div class="relative w-full overflow-hidden">
+            <div class="flex transition-transform duration-500 ease-in-out" id="slider">
+                <iframe width="900"  src="https://www.youtube.com/embed/Xb4oY8oATdo?si=Cds1pTt46LErYm4S" class="w-full h-auto flex-shrink-0 aspect-video" allowfullscreen></iframe>
+                <iframe width="900"  src="https://www.youtube.com/embed/b5wkcICSiko?si=yM12_XYP92v74phz" class="w-full h-auto flex-shrink-0 aspect-video" allowfullscreen></iframe>
+                <iframe width="900"  src="https://www.youtube.com/embed/J97G-nzTJRw?si=PJ5cNzQGmeLI91Dy" class="w-full h-auto flex-shrink-0 aspect-video" allowfullscreen></iframe>
+                <iframe width="900"  src="https://www.youtube.com/embed/5Drq3Xd1Gdc?si=QH14vVGDXQJZFvxZ" class="w-full h-auto flex-shrink-0 aspect-video" allowfullscreen></iframe>
+                <iframe width="900"  src="https://www.youtube.com/embed/hmFW2hbUqqA?si=xKdZeFXvTX5MNuya" class="w-full h-auto flex-shrink-0 aspect-video" allowfullscreen></iframe>
+            </div>
+            <button onclick="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">&#10094;</button>
+            <button onclick="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">&#10095;</button>
+        </div>
+    </div><div class="marquee-container">
+
+        <div class="marquee">🔥Selamat Datang di Website Prestasi Moklet! Lihat berbagai prestasi terbaru dari siswa terbaik kami!🔥</div>
+
+    </div>
 </body>
 </html>
